@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "release": "changeset tag"
+    "release": "npm-run-all release:*",
+    "release:github": "changeset tag",
+    "release:script": "echo \"release script\""
   },
   "author": "@naporin0624",
   "license": "MIT",
