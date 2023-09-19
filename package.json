@@ -10,5 +10,9 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.26.2"
+  },
+  "volta": {
+    "node": "18.18.0",
+    "npm": "10.1.0"
   }
 }
