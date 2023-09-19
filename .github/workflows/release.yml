@@ -27,6 +27,8 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: npx changeset tag
+          publish: |
+            npx changeset tag
+            echo "published"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
