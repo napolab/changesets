@@ -1,5 +1,11 @@
 # changesets
 
+## 0.0.9
+
+### Patch Changes
+
+- d30de15: hoge
+
 ## 0.0.8
 
 ### Patch Changes
