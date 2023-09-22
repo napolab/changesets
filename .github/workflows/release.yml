@@ -15,6 +15,9 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
+      - name: Git fetch tags
+        run: git fetch --tags origin
+
       - name: Setup Node.js 18.16.0
         uses: actions/setup-node@v3
         with:
