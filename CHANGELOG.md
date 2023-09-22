@@ -1,5 +1,11 @@
 # changesets
 
+## 0.0.7
+
+### Patch Changes
+
+- 8542887: ok
+
 ## 0.0.6
 
 ### Patch Changes
