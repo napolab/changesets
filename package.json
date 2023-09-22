@@ -3,11 +3,7 @@
   "version": "0.0.5",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "release": "npm-run-all release:*",
-    "release:github": "changeset tag",
-    "release:script": "echo \"release script\""
-  },
+  "scripts": {},
   "author": "@naporin0624",
   "license": "MIT",
   "devDependencies": {

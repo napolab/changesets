@@ -27,6 +27,11 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: npm run release
+          publish: npx changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Published
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          echo "Published"
