@@ -1,5 +1,11 @@
 # changesets
 
+## 0.0.6
+
+### Patch Changes
+
+- 61b8b95: published script test
+
 ## 0.0.5
 
 ### Patch Changes
