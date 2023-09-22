@@ -3,7 +3,6 @@
   "version": "0.0.6",
   "description": "",
   "main": "index.js",
-  "scripts": {},
   "author": "@naporin0624",
   "license": "MIT",
   "devDependencies": {
