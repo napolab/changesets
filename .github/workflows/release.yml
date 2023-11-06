@@ -71,11 +71,15 @@ jobs:
 
       - name: EAS Build (for major releases) and auto-submit
         if: needs.semver.outputs.bump-type == 'major'
-        run: echo "EAS Build production"
+        run: |
+          echo "EAS Build production"
+          cat package.json | jq '.version'
 
       - name: EAS Update (for minor or patch updates)
         if: needs.semver.outputs.bump-type == 'minor' || needs.semver.outputs.bump-type == 'patch'
-        run: echo "EAS Update production"
+        run: |
+          echo "EAS Update production"
+          cat package.json | jq '.version'
 
   stg-semver:
     needs: changeset
@@ -88,8 +92,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: "package.json"
-      - run: npm i
-      - run: npx changeset status --output ./status.json
+      - name: changeset status
+        run: |
+          npm i
+          npx changeset status --output ./status.json
       - uses: actions/github-script@v6
         id: bump-type
         with:
@@ -110,7 +116,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Dependencies
         run: npm i
-      - run: |
+
+      - name: Update package.json version
+        run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           npx changeset version
