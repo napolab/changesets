@@ -1,5 +1,11 @@
 # changesets
 
+## 0.3.0
+
+### Minor Changes
+
+- a3b6086: aaa
+
 ## 0.2.13
 
 ### Patch Changes
