@@ -41,12 +41,10 @@ jobs:
     if: needs.changeset.outputs.published == 'true'
     runs-on: ubuntu-latest
     outputs:
-      bump-type: ${{ steps.value.outputs.result }}
+      bump-type: ${{ steps.bump-type.outputs.result }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Get BumpType
-        id: value
-        uses: actions/github-script@v6
+      - uses: actions/github-script@v6
+        id: bump-type
         with:
           result-encoding: string
           script: |
