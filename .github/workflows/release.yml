@@ -39,3 +39,4 @@ jobs:
         run: |
           cat ./package.json | jq ".version"
           echo ${{ steps.changesets.outputs.publishedPackages }}
+          npx changeset status
