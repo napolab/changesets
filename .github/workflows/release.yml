@@ -40,4 +40,17 @@ jobs:
         with:
           script: |
             const [{ version }] = JSON.parse('${{ steps.changesets.outputs.publishedPackages }}')
-            console.log(version)
+            const [major, minor, patch] = version.split('.')
+
+            let type = 'patch'
+            if (patch === '0') type = 'minor'
+            if (minor === '0' && patch === '0') type = 'major'
+
+            switch(type) {
+              case 'major':
+                break
+              case 'minor':
+                break
+              case 'patch':
+                break
+            }
