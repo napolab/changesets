@@ -5,9 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.changesets/*.md'
-    paths-ignore:
-      - '.changesets/README.md'
+      - ".changesets/*.md"
 
 jobs:
   semver:
