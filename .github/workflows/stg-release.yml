@@ -1,0 +1,55 @@
+name: Staging Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  changeset:
+    runs-on: ubuntu-latest
+    outputs:
+      changesets: ${{ steps.check_status.outputs.changesets }}
+      releases: ${{ steps.check_status.outputs.releases }}
+      bump-type: ${{ steps.check_status.outputs.bump-type }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: 'package.json'
+
+      - run: npm i
+
+      - run: npx changeset status --output ./status.json
+
+      - name: Check status.json contents
+        id: check_status
+        run: |
+          content=$(cat ./status.json)
+          changesets=$(echo "$content" | jq '.changesets')
+          releases=$(echo "$content" | jq '.releases')
+          bump-type=$(echo "$content" | jq '.releases[0].type')
+
+          echo "CHANGESETS=$changesets" >> $GITHUB_ENV
+          echo "RELEASES=$releases" >> $GITHUB_ENV
+          echo "bump-type=$bump-type" >> $GITHUB_ENV
+        shell: bash
+
+  release:
+    needs: changeset
+    if: needs.changeset.outputs.bump-type != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm i
+
+      - name: EAS Build (for major releases) and auto-submit
+        if: needs.changeset.outputs.bump-type == 'major'
+        run: echo "EAS Build"
+
+      - name: EAS Update (for minor or patch updates)
+        if: needs.changeset.outputs.bump-type == 'minor' || needs.changeset.outputs.bump-type == 'patch'
+        run: echo "EAS Update"
