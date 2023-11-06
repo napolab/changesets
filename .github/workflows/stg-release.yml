@@ -24,11 +24,13 @@ jobs:
       - uses: actions/github-script@v6
         id: check_status
         with:
+          result-encoding: string
           script: |
             const { readFileSync } = require('fs')
             const content = readFileSync('./status.json', { encoding: 'utf8' })
             const status = JSON.parse(content)
-            const bumpType = status.releases?.[0]?.type || ''
+            const bumpType = status.releases?.[0]?.type ?? ''
+            console.log(bumpType)
 
             return bumpType;
 
