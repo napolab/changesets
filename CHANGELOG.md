@@ -1,5 +1,11 @@
 # changesets
 
+## 1.1.0
+
+### Minor Changes
+
+- 696a9bb: aaa
+
 ## 1.0.0
 
 ### Major Changes
