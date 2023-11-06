@@ -1,5 +1,20 @@
 # changesets
 
+## 3.0.0
+
+### Major Changes
+
+- 2de5123: bbb
+
+### Minor Changes
+
+- 6acb22f: aaa
+- 1815c26: aaa
+
+### Patch Changes
+
+- 2a0ee07: aaa
+
 ## 2.0.0
 
 ### Major Changes
