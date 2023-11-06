@@ -99,7 +99,8 @@ jobs:
             const content = readFileSync('./status.json', { encoding: 'utf8' })
             const status = JSON.parse(content)
             const bumpType = status.releases?.[0]?.type ?? ''
-            return bumpType;
+
+            return bumpType
 
   stg-release:
     needs: stg-semver
@@ -116,7 +117,12 @@ jobs:
 
       - name: EAS Build (for major releases) and auto-submit
         if: needs.stg-semver.outputs.bump-type == 'major'
-        run: echo "EAS Build staging"
+        run: |
+          echo "EAS Build staging"
+          cat package.json | jq '.version'
+
       - name: EAS Update (for minor or patch updates)
         if: needs.stg-semver.outputs.bump-type == 'minor' || needs.stg-semver.outputs.bump-type == 'patch'
-        run: echo "EAS Update staging"
+        run: |
+          echo "EAS Update staging"
+          cat package.json | jq '.version'
