@@ -15,7 +15,7 @@ jobs:
         id: files
         with:
           script: |
-            const pattern = '.changesets/!(README).md'
+            const patterns = ['.changeset/!(README).md']
             const globber = await glob.create(pattern)
             const files = await globber.glob()
 
