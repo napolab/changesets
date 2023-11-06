@@ -34,10 +34,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Published
+      - name: Get BumpType
         if: steps.changesets.outputs.published == 'true'
+        id: bump-type
         uses: actions/github-script@v6
         with:
+          result-encoding: string
           script: |
             const [{ version }] = JSON.parse('${{ steps.changesets.outputs.publishedPackages }}')
             const [major, minor, patch] = version.split('.')
@@ -55,4 +57,9 @@ jobs:
                 break
             }
 
-            console.log(type)
+            return type
+
+      - name: Relase
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          echo ${{ steps.bump-type.outputs.result }}
