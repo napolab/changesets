@@ -1,5 +1,11 @@
 # changesets
 
+## 0.2.6
+
+### Patch Changes
+
+- f4fb24e: aa
+
 ## 0.2.5
 
 ### Patch Changes
