@@ -39,4 +39,5 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(Object.keys(context.payload))
+            const [{ version }] = JSON.parse('${{ steps.changesets.outputs.publishedPackages }}')
+            console.log(version)
