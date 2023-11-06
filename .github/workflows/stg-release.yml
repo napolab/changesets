@@ -30,7 +30,6 @@ jobs:
             const content = readFileSync('./status.json', { encoding: 'utf8' })
             const status = JSON.parse(content)
             const bumpType = status.releases?.[0]?.type ?? ''
-            console.log(bumpType)
 
             return bumpType;
 
