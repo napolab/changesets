@@ -76,3 +76,42 @@ jobs:
       - name: EAS Update (for minor or patch updates)
         if: needs.semver.outputs.bump-type == 'minor' || needs.semver.outputs.bump-type == 'patch'
         run: echo "EAS Update production"
+
+  staging-remver:
+    needs: changeset
+    if: needs.changeset.outputs.published == 'false'
+    runs-on: ubuntu-latest
+    outputs:
+      bump-type: ${{ steps.check_status.outputs.result }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: "package.json"
+      - run: npm i
+      - run: npx changeset status --output ./status.json
+      - uses: actions/github-script@v6
+        id: check_status
+        with:
+          result-encoding: string
+          script: |
+            const { readFileSync } = require('fs')
+            const content = readFileSync('./status.json', { encoding: 'utf8' })
+            const status = JSON.parse(content)
+            const bumpType = status.releases?.[0]?.type ?? ''
+            return bumpType;
+
+  staging-release-actions:
+    needs: staging-remver
+    if: needs.staging-remver.outputs.bump-type != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: npm i
+      - name: EAS Build (for major releases) and auto-submit
+        if: needs.staging-remver.outputs.bump-type == 'major'
+        run: echo "EAS Build staging"
+      - name: EAS Update (for minor or patch updates)
+        if: needs.staging-remver.outputs.bump-type == 'minor' || needs.staging-remver.outputs.bump-type == 'patch'
+        run: echo "EAS Update staging"
