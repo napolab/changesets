@@ -26,7 +26,7 @@ jobs:
           node-version-file: "package.json"
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm i
 
       - name: Create Release Pull Request
         id: changesets
@@ -65,9 +65,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm i
+
       - name: EAS Build (for major releases) and auto-submit
         if: needs.semver.outputs.bump-type == 'major'
         run: echo "EAS Build"
+
       - name: EAS Update (for minor or patch updates)
         if: needs.semver.outputs.bump-type == 'minor' || needs.semver.outputs.bump-type == 'patch'
         run: echo "EAS Update"
