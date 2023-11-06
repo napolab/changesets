@@ -19,7 +19,6 @@ jobs:
             const patterns = ['.changeset/*.md', '!.changeset/README.md']
             const globber = await glob.create(patterns.join('\n'))
             const files = await globber.glob()
-            console.log(files)
 
             return files.length
 
