@@ -77,7 +77,7 @@ jobs:
         if: needs.semver.outputs.bump-type == 'minor' || needs.semver.outputs.bump-type == 'patch'
         run: echo "EAS Update production"
 
-  staging-remver:
+  staging-semver:
     needs: changeset
     if: needs.changeset.outputs.published == 'false'
     runs-on: ubuntu-latest
@@ -101,17 +101,17 @@ jobs:
             const bumpType = status.releases?.[0]?.type ?? ''
             return bumpType;
 
-  staging-release-actions:
-    needs: staging-remver
-    if: needs.staging-remver.outputs.bump-type != ''
+  staging-release:
+    needs: staging-semver
+    if: needs.staging-semver.outputs.bump-type != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
         run: npm i
       - name: EAS Build (for major releases) and auto-submit
-        if: needs.staging-remver.outputs.bump-type == 'major'
+        if: needs.staging-semver.outputs.bump-type == 'major'
         run: echo "EAS Build staging"
       - name: EAS Update (for minor or patch updates)
-        if: needs.staging-remver.outputs.bump-type == 'minor' || needs.staging-remver.outputs.bump-type == 'patch'
+        if: needs.staging-semver.outputs.bump-type == 'minor' || needs.staging-semver.outputs.bump-type == 'patch'
         run: echo "EAS Update staging"
