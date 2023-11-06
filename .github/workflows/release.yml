@@ -92,10 +92,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: "package.json"
+
       - name: changeset status
         run: |
           npm i
           npx changeset status --output ./status.json
+
       - uses: actions/github-script@v6
         id: bump-type
         with:
