@@ -54,3 +54,5 @@ jobs:
               case 'patch':
                 break
             }
+
+            console.log(type)
