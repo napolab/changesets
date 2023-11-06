@@ -77,12 +77,12 @@ jobs:
         if: needs.semver.outputs.bump-type == 'minor' || needs.semver.outputs.bump-type == 'patch'
         run: echo "EAS Update production"
 
-  staging-semver:
+  stg-semver:
     needs: changeset
     if: needs.changeset.outputs.published == 'false'
     runs-on: ubuntu-latest
     outputs:
-      bump-type: ${{ steps.check_status.outputs.result }}
+      bump-type: ${{ steps.bump-type.outputs.result }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -91,7 +91,7 @@ jobs:
       - run: npm i
       - run: npx changeset status --output ./status.json
       - uses: actions/github-script@v6
-        id: check_status
+        id: bump-type
         with:
           result-encoding: string
           script: |
@@ -101,9 +101,9 @@ jobs:
             const bumpType = status.releases?.[0]?.type ?? ''
             return bumpType;
 
-  staging-release:
-    needs: staging-semver
-    if: needs.staging-semver.outputs.bump-type != ''
+  stg-release:
+    needs: stg-semver
+    if: needs.stg-semver.outputs.bump-type != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -115,8 +115,8 @@ jobs:
           npx changeset version
 
       - name: EAS Build (for major releases) and auto-submit
-        if: needs.staging-semver.outputs.bump-type == 'major'
+        if: needs.stg-semver.outputs.bump-type == 'major'
         run: echo "EAS Build staging"
       - name: EAS Update (for minor or patch updates)
-        if: needs.staging-semver.outputs.bump-type == 'minor' || needs.staging-semver.outputs.bump-type == 'patch'
+        if: needs.stg-semver.outputs.bump-type == 'minor' || needs.stg-semver.outputs.bump-type == 'patch'
         run: echo "EAS Update staging"
