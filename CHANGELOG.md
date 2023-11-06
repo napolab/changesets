@@ -1,5 +1,11 @@
 # changesets
 
+## 0.2.12
+
+### Patch Changes
+
+- 64f755a: aaa
+
 ## 0.2.11
 
 ### Patch Changes
