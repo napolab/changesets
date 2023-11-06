@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Git fetch tags
         run: git fetch --tags origin
 
-      - name: Setup Node.js 18.16.0
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version-file: "package.json"
 
@@ -37,4 +37,4 @@ jobs:
       - name: Published
         if: steps.changesets.outputs.published == 'true'
         run: |
-          echo "Published"
+          echo steps.changesets.outputs.publishedPackages
