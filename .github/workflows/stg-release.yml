@@ -11,6 +11,7 @@ jobs:
     outputs:
       files: ${{ steps.files.outputs.result }}
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/github-script@v6
         id: files
         with:
