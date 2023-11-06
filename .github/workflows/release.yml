@@ -109,7 +109,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Dependencies
         run: npm i
-      - run: npx changeset version
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          npx changeset version
+
       - name: EAS Build (for major releases) and auto-submit
         if: needs.staging-semver.outputs.bump-type == 'major'
         run: echo "EAS Build staging"
