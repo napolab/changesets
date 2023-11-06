@@ -1,5 +1,11 @@
 # changesets
 
+## 1.1.1
+
+### Patch Changes
+
+- 79090cb: aaa
+
 ## 1.1.0
 
 ### Minor Changes
