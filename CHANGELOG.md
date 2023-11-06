@@ -1,5 +1,11 @@
 # changesets
 
+## 0.2.2
+
+### Patch Changes
+
+- ed24728: aaa
+
 ## 0.2.1
 
 ### Patch Changes
