@@ -4,11 +4,27 @@ on:
   push:
     branches:
       - main
-    paths:
-      - ".changesets/*.md"
 
 jobs:
+  checker:
+    runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.files.outputs.result }}
+    steps:
+      - uses: actions/github-script@v6
+        id: files
+        with:
+          script: |
+            const glob = require('@actions/glob')
+            const pattern = '.changesets/!(README).md'
+            const globber = await glob.create(pattern)
+            const files = await globber.glob()
+
+            return files.length
+
   semver:
+    needs: checker
+    if: needs.checker.outputs.files > 0
     runs-on: ubuntu-latest
     outputs:
       bump-type: ${{ steps.check_status.outputs.result }}
