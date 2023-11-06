@@ -4,8 +4,10 @@ on:
   push:
     branches:
       - main
-    branches-ignore:
-      - changeset-release/*
+    paths:
+      - '.changesets/*.md'
+    paths-ignore:
+      - '.changesets/README.md'
 
 jobs:
   semver:
