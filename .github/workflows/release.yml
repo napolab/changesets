@@ -71,8 +71,8 @@ jobs:
 
       - name: EAS Build (for major releases) and auto-submit
         if: needs.semver.outputs.bump-type == 'major'
-        run: echo "EAS Build"
+        run: echo "EAS Build production"
 
       - name: EAS Update (for minor or patch updates)
         if: needs.semver.outputs.bump-type == 'minor' || needs.semver.outputs.bump-type == 'patch'
-        run: echo "EAS Update"
+        run: echo "EAS Update production"
