@@ -1,5 +1,11 @@
 # changesets
 
+## 0.2.4
+
+### Patch Changes
+
+- 6cf2a5f: i
+
 ## 0.2.3
 
 ### Patch Changes
