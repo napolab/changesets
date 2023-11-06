@@ -37,4 +37,5 @@ jobs:
       - name: Published
         if: steps.changesets.outputs.published == 'true'
         run: |
+          cat ./package.json | jq ".version"
           echo ${{ steps.changesets.outputs.publishedPackages }}
