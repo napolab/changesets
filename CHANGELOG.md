@@ -1,5 +1,11 @@
 # changesets
 
+## 4.1.0
+
+### Minor Changes
+
+- 9f55933: hoge
+
 ## 4.0.0
 
 ### Major Changes
