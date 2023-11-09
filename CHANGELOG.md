@@ -1,5 +1,11 @@
 # changesets
 
+## 5.2.1
+
+### Patch Changes
+
+- a49e0e7: aa
+
 ## 5.2.0
 
 ### Minor Changes
