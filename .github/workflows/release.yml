@@ -57,7 +57,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const [major, minor, patch] = ${{ steps.version.outputs.result }}.split('.')
+            const [major, minor, patch] = '${{ steps.version.outputs.result }}'.split('.')
 
             let type = 'patch'
             if (patch === '0') type = 'minor'
