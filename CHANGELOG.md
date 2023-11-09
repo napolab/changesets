@@ -1,5 +1,11 @@
 # changesets
 
+## 5.2.0
+
+### Minor Changes
+
+- 5894a20: aa
+
 ## 5.1.0
 
 ### Minor Changes
