@@ -59,7 +59,7 @@ jobs:
 
             return { type, tag: `v${first.version}` }
       - run: |
-          echo "${{ steps.bump-type.outputs }}"
+          echo "${{ steps.bump-type.outputs.result }}"
           echo "Bump type: ${{ steps.bump-type.outputs.result.type }}"
           echo "Tag: ${{ steps.bump-type.outputs.result.tag }}"
 
