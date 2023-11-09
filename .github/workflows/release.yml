@@ -41,12 +41,13 @@ jobs:
     if: needs.changeset.outputs.published == 'true'
     runs-on: ubuntu-latest
     outputs:
-      bump-type: ${{ steps.bump-type.outputs.result }}
+      bump-type: ${{ steps.bump-type.outputs.result.type }}
+      tag: ${{ steps.bump-type.outputs.result.tag }}
     steps:
       - uses: actions/github-script@v6
         id: bump-type
         with:
-          result-encoding: string
+          result-encoding: json
           script: |
             const [first] = JSON.parse('${{ needs.changeset.outputs.publishedPackages }}')
             if (first === undefined) return ''
@@ -57,7 +58,7 @@ jobs:
             if (patch === '0') type = 'minor'
             if (minor === '0' && patch === '0') type = 'major'
 
-            return type
+            return { type, tag: `v${first.version}` }
 
   release:
     needs: semver
@@ -65,6 +66,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.semver.outputs.tag }}
 
       - name: Install Dependencies
         run: npm i
