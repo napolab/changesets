@@ -41,27 +41,29 @@ jobs:
     if: needs.changeset.outputs.published == 'true'
     runs-on: ubuntu-latest
     outputs:
-      bump-type: ${{ steps.bump-type.outputs.result.type }}
-      tag: ${{ steps.bump-type.outputs.result.tag }}
+      version: ${{ steps.version.outputs.result }}
+      bump-type: ${{ steps.bump-type.outputs.result }}
     steps:
+      - uses: actions/github-script@v6
+        id: version
+        with:
+          result-encoding: string
+          script: |
+            const [first] = JSON.parse('${{ needs.changeset.outputs.publishedPackages }}')
+
+            return first.version
       - uses: actions/github-script@v6
         id: bump-type
         with:
+          result-encoding: string
           script: |
-            const [first] = JSON.parse('${{ needs.changeset.outputs.publishedPackages }}')
-            if (first === undefined) return ''
-
-            const [major, minor, patch] = first.version.split('.')
+            const [major, minor, patch] = ${{ steps.version.outputs.result }}.split('.')
 
             let type = 'patch'
             if (patch === '0') type = 'minor'
             if (minor === '0' && patch === '0') type = 'major'
 
-            return { type, tag: `v${first.version}` }
-      - run: |
-          echo "${{ steps.bump-type.outputs.result }}"
-          echo "Bump type: ${{ steps.bump-type.outputs.result.type }}"
-          echo "Tag: ${{ steps.bump-type.outputs.result.tag }}"
+            return type
 
   release:
     needs: semver
@@ -70,7 +72,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.semver.outputs.tag }}
+          ref: 'v${{ needs.semver.outputs.version }}'
 
       - name: Install Dependencies
         run: npm i
