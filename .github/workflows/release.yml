@@ -47,7 +47,6 @@ jobs:
       - uses: actions/github-script@v6
         id: bump-type
         with:
-          result-encoding: json
           script: |
             const [first] = JSON.parse('${{ needs.changeset.outputs.publishedPackages }}')
             if (first === undefined) return ''
@@ -59,6 +58,10 @@ jobs:
             if (minor === '0' && patch === '0') type = 'major'
 
             return { type, tag: `v${first.version}` }
+      - run: |
+          echo "${{ steps.bump-type.outputs }}"
+          echo "Bump type: ${{ steps.bump-type.outputs.result.type }}"
+          echo "Tag: ${{ steps.bump-type.outputs.result.tag }}"
 
   release:
     needs: semver
