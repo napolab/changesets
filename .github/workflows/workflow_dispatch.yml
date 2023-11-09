@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
       - name: Run a multi-line script
         run: |
           echo $(git branch)
@@ -18,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
       - name: Run a multi-line script
         run: |
           echo $(git branch)
